@@ -83,8 +83,8 @@ class Module extends AbstractModule
         );
         $sharedEventManager->attach(
             'Omeka\Controller\Site\Item',
-            'view.show.after',
-            [$this, 'handleViewShowAfterItem']
+            'view.show.before',
+            [$this, 'handleViewShowBeforeItem']
         );
     }
 
@@ -110,6 +110,12 @@ class Module extends AbstractModule
 
         $view = $event->getTarget();
         echo $view->universalViewer($view->itemSets);
+    }
+
+    public function handleViewShowBeforeItem(Event $event): void
+    {
+        $view = $event->getTarget();
+        echo $view->universalViewer($view->item);
     }
 
     public function handleViewShowAfterItem(Event $event): void
